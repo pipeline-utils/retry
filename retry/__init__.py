@@ -1,7 +1,7 @@
 import logging
 import random
 import time
-from functools import partial
+from functools import partial, wraps
 from typing import Any, Callable, Optional
 
 
@@ -66,22 +66,25 @@ def retry(
     jitter=0,
     logger: Any = logging.getLogger(__name__),
 ) -> Callable[..., Any]:
-    def wrapper(f, *fargs, **fkwargs) -> Callable[..., Any]:
-        return partial(
-            retry_call,
-            f=f,
-            fargs=fargs,
-            fkwargs=fkwargs,
-            exceptions=exceptions,
-            tries=tries,
-            delay=delay,
-            max_delay=max_delay,
-            backoff=backoff,
-            jitter=jitter,
-            logger=logger,
-        )
+    def decorator(f) -> Callable[..., Any]:
+        @wraps(f)
+        def wrapper(*fargs, **fkwargs) -> Callable[..., Any]:
+            return retry_call(
+                f=f,
+                fargs=fargs,
+                fkwargs=fkwargs,
+                exceptions=exceptions,
+                tries=tries,
+                delay=delay,
+                max_delay=max_delay,
+                backoff=backoff,
+                jitter=jitter,
+                logger=logger,
+            )
 
-    return wrapper
+        return wrapper
+
+    return decorator
 
 
 __ALL__ = (

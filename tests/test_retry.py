@@ -35,6 +35,56 @@ def test_retry(monkeypatch):
     assert mock_sleep_time[0] == sum(delay * backoff**i for i in range(tries - 1))
 
 
+def test_retry_function_with_args(monkeypatch):
+    mock_sleep_time = [0]
+
+    def mock_sleep(seconds):
+        mock_sleep_time[0] += seconds
+
+    monkeypatch.setattr(time, "sleep", mock_sleep)
+
+    hit = [0]
+
+    tries = 5
+    delay = 1
+    backoff = 2
+
+    @retry(tries=tries, delay=delay, backoff=backoff)
+    def f(msg: str):
+        hit[0] += 1
+        raise UserDefinedException(msg)
+
+    with pytest.raises(UserDefinedException):
+        f("Hello")
+    assert hit[0] == tries
+    assert mock_sleep_time[0] == sum(delay * backoff**i for i in range(tries - 1))
+
+
+def test_retry_function_with_kwargs(monkeypatch):
+    mock_sleep_time = [0]
+
+    def mock_sleep(seconds):
+        mock_sleep_time[0] += seconds
+
+    monkeypatch.setattr(time, "sleep", mock_sleep)
+
+    hit = [0]
+
+    tries = 5
+    delay = 1
+    backoff = 2
+
+    @retry(tries=tries, delay=delay, backoff=backoff)
+    def f(msg: str):
+        hit[0] += 1
+        raise UserDefinedException(msg)
+
+    with pytest.raises(UserDefinedException):
+        f(msg="Hello")
+    assert hit[0] == tries
+    assert mock_sleep_time[0] == sum(delay * backoff**i for i in range(tries - 1))
+
+
 def test_tries_minus1():
     hit = [0]
     target = 10

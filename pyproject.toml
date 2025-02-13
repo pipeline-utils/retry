@@ -1,14 +1,14 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires=["setuptools>=61.0", "wheel"]
+build-backend="setuptools.build_meta"
 
 [project]
-name = "pipeline-utils-retry"
-version = "1.1.0"
-description = "A simple retry mechanism for Python functions"
-readme = "README.md"
-requires-python = ">=3.8"
-classifiers = [
+name="pipeline-utils-retry"
+version="1.1.0"
+description="A simple retry mechanism for Python functions"
+readme="README.md"
+requires-python=">=3.8"
+classifiers=[
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Programming Language :: Python :: 3",
@@ -19,11 +19,14 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pipeline-utils/retry"
+Homepage="https://github.com/pipeline-utils/retry"
 
 [tool.setuptools]
-packages = ["retry"]
+packages=["retry"]
 
 [tool.black]
-line-length = 120
-target-version = ["py38"]
+line-length=120
+target-version=["py38"]
+
+[tool.isort]
+profile="black"

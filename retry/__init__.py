@@ -87,7 +87,4 @@ def retry(
     return decorator
 
 
-__ALL__ = (
-    "retry",
-    "retry_call",
-)
+__all__ = ["retry", "retry_call"]

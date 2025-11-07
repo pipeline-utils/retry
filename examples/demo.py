@@ -13,7 +13,6 @@ from typing import Any, Dict
 
 from retry import retry, retry_call
 
-
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 LOGGER = logging.getLogger("retry-demo")
 
@@ -64,6 +63,7 @@ def fetch_with_decorator() -> Dict[str, Any]:
 
 
 # --- Using the functional helper ---------------------------------------------------
+
 
 def fetch_with_retry_call() -> Dict[str, Any]:
     """

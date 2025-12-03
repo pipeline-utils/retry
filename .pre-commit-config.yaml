@@ -22,3 +22,11 @@ repos:
       - id: flake8
         args:
           - --extend-ignore=E501,F541
+  - repo: https://github.com/pylint-dev/pylint.git
+    rev: v3.2.7
+    hooks:
+      - id: pylint
+        args:
+          - --max-line-length=120
+          - -E
+          - --disable=E0401,E1120
